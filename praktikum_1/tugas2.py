@@ -18,12 +18,12 @@ class Registration(threading.Thread):
         threadLock.acquire()
         print(f"{self.name} thread is being processing...\n")
 
+        # Release the lock before time.sleep() 
+        threadLock.release()
+
         # simulate the real world task with time.sleep
         time.sleep(self.duration)
         print(f"{self.name} thread is finish processing ^_^\n")
-
-        # Release the lock
-        threadLock.release()
 
 class Process(threading.Thread):
     def __init__(self, name, duration) -> None:
@@ -36,13 +36,12 @@ class Process(threading.Thread):
         threadLock.acquire()
         print(f"{self.name} thread is being processing...\n")
 
-        # simulate the real world task with time.sleep
-        time.sleep(self.duration)
-        print(f"{self.name} thread is finish processing ^_^\n")
-
         # Release the lock
         threadLock.release()
 
+        # simulate the real world task with time.sleep
+        time.sleep(self.duration)
+        print(f"{self.name} thread is finish processing ^_^\n")
 
 def main():
     start_time = time.time() # For calculating the time spend for executing all thread
@@ -64,3 +63,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
